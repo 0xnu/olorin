@@ -1,6 +1,6 @@
 ## Telegram Music Sharing Bot
 
-Olorin is an advanced Telegram music bot written in Golang. It allows users (or admins/moderators) to share songs with dynamic emoji reactions and a Twitter profile link for further engagement.
+[Olorin](https://www.wordhippo.com/what-is/the-meaning-of/yoruba-word-c156a5b85a427c85b7e23dba1c2d8187b7860ad7.html) is an advanced Telegram music bot written in Golang. It allows users (or admins/moderators) to share songs with dynamic emoji reactions and a Twitter profile link for further engagement.
 
 ### Key Features
 
