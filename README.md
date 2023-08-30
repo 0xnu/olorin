@@ -17,14 +17,15 @@ Below are the key features of the bot:
 ### Instructions
 
 - Grab a key from [Bot Father](https://telegram.me/BotFather).
-- Update `BOT_TOKEN` in [main.go](./main.go)
+- Update `BOT_TOKEN` and song details in [config.json](./config.json)
 
 ### Install Dependencies
 
 First, you'll need to install the Telegram Bot API package for Golang:
 
 ```shell
-go mod init main && go mod tidy
+go mod init main
+go mod tidy
 ```
 
 ### Local Development

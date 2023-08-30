@@ -1,15 +1,42 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"sync"
 
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
+type Config struct {
+	BOT_TOKEN string      `json:"BOT_TOKEN"`
+	Audio     AudioConfig `json:"Audio"`
+}
+
+type AudioConfig struct {
+	Title     string `json:"Title"`
+	Performer string `json:"Performer"`
+	MimeType  string `json:"MimeType"`
+	Caption   string `json:"Caption"`
+	FilePath  string `json:"FilePath"`
+}
+
 func main() {
-	bot, err := tgbotapi.NewBotAPI("BOT_TOKEN")
+	// Read JSON configuration
+	jsonFile, err := ioutil.ReadFile("./config.json")
+	if err != nil {
+		log.Panic(err)
+	}
+
+	var config Config
+	err = json.Unmarshal(jsonFile, &config)
+	if err != nil {
+		log.Panic(err)
+	}
+
+	bot, err := tgbotapi.NewBotAPI(config.BOT_TOKEN)
 	if err != nil {
 		log.Panic(err)
 	}
@@ -86,13 +113,13 @@ func main() {
 			}
 			bot.DeleteMessage(delConfig)
 
-			audioConfig := tgbotapi.NewAudioUpload(chatID, "./audio/my_g_kizz_daniel.mp3")
-			audioConfig.Title = "My G"
-			audioConfig.Performer = "Kizz Daniel"
-			audioConfig.MimeType = "audio/mp3"
-			audioConfig.Caption = "Genre: Afrobeats\nReleased: Fri, 28th July 2023"
+			audioUpload := tgbotapi.NewAudioUpload(chatID, config.Audio.FilePath)
+			audioUpload.Title = config.Audio.Title
+			audioUpload.Performer = config.Audio.Performer
+			audioUpload.MimeType = config.Audio.MimeType
+			audioUpload.Caption = config.Audio.Caption
 
-			_, err := bot.Send(audioConfig)
+			_, err := bot.Send(audioUpload)
 			if err != nil {
 				log.Panic(err)
 			}

@@ -1,0 +1,10 @@
+{
+  "BOT_TOKEN": "BOT_TOKEN",
+  "Audio": {
+    "Title": "My G",
+    "Performer": "Kizz Daniel",
+    "MimeType": "audio/mp3",
+    "Caption": "Genre: Afrobeats\nReleased: Fri, 28th July 2023",
+    "FilePath": "./audio/my_g_kizz_daniel.mp3"
+  }
+}
