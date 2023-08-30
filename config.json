@@ -6,5 +6,10 @@
     "MimeType": "audio/mp3",
     "Caption": "Genre: Afrobeats\nReleased: Fri, 28th July 2023",
     "FilePath": "./audio/my_g_kizz_daniel.mp3"
+  },
+  "Roles": {
+    "Admin": false,
+    "Moderator": false,
+    "User": true
   }
 }

@@ -13,6 +13,7 @@ import (
 type Config struct {
 	BOT_TOKEN string      `json:"BOT_TOKEN"`
 	Audio     AudioConfig `json:"Audio"`
+	Roles     RoleConfig  `json:"Roles"`
 }
 
 type AudioConfig struct {
@@ -21,6 +22,12 @@ type AudioConfig struct {
 	MimeType  string `json:"MimeType"`
 	Caption   string `json:"Caption"`
 	FilePath  string `json:"FilePath"`
+}
+
+type RoleConfig struct {
+	Admin     bool `json:"Admin"`
+	Moderator bool `json:"Moderator"`
+	User      bool `json:"User"`
 }
 
 func main() {
@@ -105,6 +112,13 @@ func main() {
 
 		if update.Message.Text == "/sharemusic" {
 			chatID := update.Message.Chat.ID
+
+			if !config.Roles.User {
+				msg := tgbotapi.NewMessage(chatID, "You are unauthorised to use the command!")
+				bot.Send(msg)
+				continue
+			}
+
 			messageID := update.Message.MessageID
 
 			delConfig := tgbotapi.DeleteMessageConfig{
@@ -124,6 +138,7 @@ func main() {
 				log.Panic(err)
 			}
 
+			mu.Lock()
 			inlineKeyboard := tgbotapi.NewInlineKeyboardMarkup(
 				tgbotapi.NewInlineKeyboardRow(
 					tgbotapi.NewInlineKeyboardButtonData(fmt.Sprintf("👍 %d", emojiCounts["thumbs_up"]), "thumbs_up"),
@@ -133,6 +148,7 @@ func main() {
 					tgbotapi.NewInlineKeyboardButtonData(fmt.Sprintf("🚀 %d", emojiCounts["launch"]), "launch"),
 				),
 			)
+			mu.Unlock()
 
 			keyboardMsg := tgbotapi.NewMessage(chatID, "Follow Us: <a href=\"https://twitter.com/LatestJamz\">@LatestJamz</a>")
 			keyboardMsg.ParseMode = "HTML"
